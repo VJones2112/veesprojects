@@ -1,0 +1,220 @@
+<html>
+<p>Beat the computer at tennis!</p>
+<head><style> p{color:green; font-size:20px;font-family:cursive; text-indent: 280px };
+	var{color:white; font-size:200px} /*//Can't figure out how to increase font size!*/
+	//player1Score{color:white; font-size:200px;}*/
+	//player2Score{color:white; font-size:200px;}*/
+
+    </style></head>
+<canvas id="gameCanvas" width="800" height="600">
+    </canvas>
+<script>
+
+//This section defines the variables we'll use.
+
+var canvas;
+var canvasContext;
+var ballx = 50;
+var bally = 50;
+var ballSpeedX = 10;
+var ballSpeedY = 4;
+var player1Score = 0;
+var player2Score = 0;
+
+const WINNING_SCORE = 3;
+var showingWinScreen = false;
+
+var paddle1Y= 250;
+var paddle2Y= 250;
+const PADDLE_THICKNESS = 10;
+const PADDLE_HEIGHT = 100;
+
+
+
+
+//This function enables our mouse to move the paddles.
+
+function calculateMousePos(evt) {
+	var rect = canvas.getBoundingClientRect();
+	var root = document.documentElement;
+	var mouseX = evt.clientX - rect.left - root.scrollLeft;
+	var mouseY = evt.clientY - rect.top - root.scrollTop;
+	//This returns a pair of variables together instead of one at a time.
+	return {
+		x:mouseX,
+		y:mouseY
+};
+}
+//This helps us return to the game canvas when someone wins.
+function handleMouseClick(evt) {
+	if(showingWinScreen) {
+		player1Score = 0;
+		player2Score = 0;
+		showingWinScreen = false;
+	}
+}
+
+function handleMouseClick(evt) {
+	if(showingWinScreen) {
+		player1Score=0;
+		player2Score=0;
+		showingWinScreen=false;
+}
+}//I think this sets up the canvas.
+window.onload = function(){
+        
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+        
+        var framesPerSecond = 30;
+        setInterval(function(){
+            moveEverything();
+            drawEverything();
+        },1000/framesPerSecond);
+	
+	canvas.addEventListener('mousedown',handleMouseClick);	
+	
+	canvas.addEventListener('mousedown', handleMouseClick);
+
+	canvas.addEventListener('mousemove',
+		function(evt){
+			var mousePos = calculateMousePos(evt);
+			paddle1Y= mousePos.y - (PADDLE_HEIGHT/2);
+			paddle2Y= mousePos.y - (PADDLE_HEIGHT/2);
+});
+}
+ 
+       
+//This will reset the ball by centering it on the screen when you miss.
+
+	function ballReset() {
+		if(player1Score >= WINNING_SCORE || //means 'or else'
+			player2Score >= WINNING_SCORE) {
+			showingWinScreen = true;
+				
+}
+		ballSpeedX=-ballSpeedX;
+		ballx = canvas.width/2;
+		bally = canvas.height/2;
+}   
+
+
+//This is the movement code. computerMovement is the cheater cheater AI.
+	function computerMovement(){
+	var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT/2);
+	if(paddle2YCenter < bally-35){
+		paddle2Y += 6;
+}
+	else if(paddle2YCenter > bally+35){
+		paddle2Y -= 6;
+}
+}
+	function moveEverything() {
+	if(showingWinScreen) {
+		return;
+}
+	computerMovement();
+  	ballx += ballSpeedX; 
+	bally += ballSpeedY; 
+   	
+
+//This controls what happens when ball passes left side.
+	//I added <15 to make it look like it's bouncing off the paddle (distance from edge+paddle thickness)!
+	if(ballx < 15) {
+		if(bally > paddle1Y && //&& means 'and also'
+			bally <paddle1Y+PADDLE_HEIGHT) {
+			ballSpeedX = -ballSpeedX;
+			var deltaY = bally
+					-(paddle1Y+PADDLE_HEIGHT/2);
+			ballSpeedY = deltaY*0.35;
+			var deltaY = bally
+					-(paddle2Y+PADDLE_HEIGHT/2);
+			ballSpeedY = deltaY*0.35;
+			}		
+			else {
+			player2Score ++ //++ means +1; Also this must be BEFORE ballReset();
+			ballReset();
+		
+}
+}
+	//I added -15 to make it look like it's bouncing off the paddle (distance from edge+paddle thickness)!
+	if(ballx > canvas.width-15) {
+		if(bally > paddle2Y && //&& means 'and also'
+			bally <paddle2Y+PADDLE_HEIGHT) {
+			ballSpeedX = -ballSpeedX;
+			var deltaY = bally
+					-(paddle2Y+PADDLE_HEIGHT/2);
+			ballSpeedY = deltaY*0.35;
+		}else {
+			player1Score ++;		
+			ballReset();
+		}
+}
+	if(bally < 0) {
+	ballSpeedY=-ballSpeedY;
+}
+
+	if(bally > canvas.height) {
+	ballSpeedY=-ballSpeedY;
+}
+}
+
+//This is how you draw all the elements on the screen.
+
+function drawNet(){
+	for(var i=0; i<canvas.height; i+=40){ //jump in intervals of 40
+		colorRect(canvas.width/2-1,i,2,20,'white');
+	}
+}
+
+function drawEverything() {
+	//next line blanks out the screen with 'black'
+    	colorRect(0,0,canvas.width,canvas.height,'ForestGreen');
+
+//This is what happens when someone wins the game!
+	if(showingWinScreen) {
+		canvasContext.fillStyle = 'white';
+		if(player1Score >= WINNING_SCORE) {
+			canvasContext.fillText("Player 1 Wins!", canvas.width*0.25,200);
+		}
+		else if(player2Score >= WINNING_SCORE){
+		canvasContext.fillText("Player 2 Wins!", canvas.width*0.75,200);
+}
+		canvasContext.fillText("click to continue", canvas.width/2,450);
+		return;
+}	
+	//this is the net
+	drawNet();
+
+	//This the left player paddle.
+	colorRect(5,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
+
+	//next line creates the ball
+	colorCircle(ballx,bally,10,'white');
+
+	//This the right player paddle.
+	colorRect(canvas.width-PADDLE_THICKNESS-5,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
+              
+	//This will display the score on the screen.
+	canvasContext.fillText(player1Score, 100,100);
+	canvasContext.fillText(player2Score, canvas.width-100,100);
+  
+}
+
+function colorCircle(centerX,centerY,radius, drawColor){
+	canvasContext.fillStyle=drawColor;
+	canvasContext.beginPath();
+	canvasContext.arc(centerX,centerY,radius,0,Math.PI*2, true);
+	canvasContext.fill();
+
+}
+
+   
+function colorRect(leftX,topY,width,height,drawColor){
+  canvasContext.fillStyle= drawColor;
+  canvasContext.fillRect(leftX,topY,width,height);
+}
+</script>
+<p style="color: green; text-indent: 380px"><a href="index.html">Projects Home</a></p>
+
+</html>

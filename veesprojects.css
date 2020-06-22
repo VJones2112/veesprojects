@@ -1,0 +1,187 @@
+img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"] {
+    display: none;
+}
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+/*Background source: http://thepatternlibrary.com/#white-wood*/
+body {
+    display: grid;
+    font-size:16px;
+    /*    grid-template-rows: 2fr repeat(6, 10%);*/
+    grid-template-columns: 100%;
+    /*    grid-row-gap: 20px;*/
+    grid-auto-flow: row;
+/*    background-color: #ffeec6;*/
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(white-wood.jpg);
+}
+
+header {
+    grid-row: 1 /span 1;
+    grid-column: 1 / span 1;
+    margin: 0 auto;
+    /*    height: 200px;*/
+    color: #ffeec6;
+    font-weight: 100;
+    font-size: 2rem;
+    text-align: center;
+    /*    border-bottom: 20px;*/
+    /*    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6) ), url(woodCopy.jpg);*/
+}
+
+nav li {
+    text-align: center;
+    list-style: none;
+    font-size: 1.2rem;
+    /*    display: inline-block;*/
+    margin-right: 40px;
+    padding-bottom: 15px;
+
+
+}
+
+nav a {
+    color: #ffeec6;
+        text-decoration: none;
+}
+
+nav a:hover {
+    background-color: #ffeec6;
+    color: #3f2a14;
+}
+
+.container {
+    margin: 0 auto;
+    background-color: #ffeec6;
+    padding: 20px;
+}
+
+
+
+img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+.about {
+    color: #ffeec6;
+    font-weight: 100;
+    font-size: 40px;
+}
+
+.aboutp {
+    margin: 0 auto;
+    background-color: #ffeec6;
+    padding: 20px;
+    font-size: 18px;
+}
+
+footer {
+    grid-column: 1/ span 1;
+    grid-row: 5/ span 1;
+    /*    background-color: #3f2a14;*/
+    color: #ffeec6;
+    text-align: right;
+}
+
+
+
+
+@media screen and (min-width: 1000px) {
+    nav li {
+        font-size: 1.5rem;
+        margin-right: 60px;
+        display: inline-block;
+    }
+
+
+    .proj1,
+    .proj2,
+    .proj3 {
+        padding-bottom: 50px;
+    }
+
+    .left {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+}
+
+
+@media screen and (min-width: 1200px) {
+
+    body {
+        display: grid;
+        grid-auto-flow: row;
+    }
+
+
+    nav li {
+        font-size: 1.8rem;
+        margin-right: 60px;
+        display: inline-block;
+    }
+
+    .container {
+        max-width: 1800px;
+        margin: 0 auto;
+    }
+
+    #projects {
+        display: grid;
+        grid-template-columns: 50%;
+
+    }
+
+    .proj1 {
+        grid-area: 1/1/2/1;
+    }
+
+    .proj2 {
+        grid-area: 1/2/2/2;
+    }
+
+    .proj3 {
+        grid-area: 2/1/3/1;
+    }
+
+    .proj4 {
+        grid-area: 2/2/3/2;
+    }
+
+    .proj1,
+    .proj2,
+    .proj3 {
+        padding-bottom: 50px;
+    }
+
+    .left {
+        padding-left: 50px;
+        padding-right: 10px;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    img {
+        height: 250px;
+        width: 250px;
+    }
+
+    /*
+    footer {
+        position: relative;
+    }    
+*/
+
+}
